@@ -1,12 +1,20 @@
 let img; // creates image variable
 
-let size = 7; // element size
+// let size = 7; // element size
 
 let startx = 0; // starting x coordinate
 let starty = 0; // starting y coordinate
 
+let population = 1800;
+
+let numOfPixels; //aka total remaining population for panda it is ~1800
+let numOfPixelsX;
+let numOfPixelsY;
+
+let sizeOfPixel = 0;
+
 function preload() {
-	img = loadImage("./panda-img.jpg"); // preloads Virginia picture!
+	img = loadImage("./panda-img.jpg"); // loads image
 }
 
 function setup() {
@@ -14,20 +22,42 @@ function setup() {
 
 	img.loadPixels(); // loads image
 	// img.resize(500, 0); // resizes image to window size
+    imageMode(CENTER);
 	img.updatePixels(); // updates image
 
+	// rSlider = createSlider(5, 2000, 2000, 1);
+	rSlider = createSlider(5, 1000, calculateSize(population), 1);
+	rSlider.position(30, 5);
+	rSlider.style("width", `${img.width}px`);
 
-    rSlider = createSlider(5, 2000, 1000, 1);
-    rSlider.position(30, 10);
-    console.log(img.pixels.length/4)
+	// text("Pixel Density: " + 900, 1);
+	// textSize(20);
+	// fill(255);
 }
 
 function draw() {
 	clear();
 	background(0);
+	// console.log((floor(img.width * img.height) / rSlider.value()));
+	// console.log(img.width);
+	// console.log(rSlider.value());
 
-	let size = floor(map(rSlider.value(), 0, width, 5, 40));
+	// sizeOfPixel = floor(map(rSlider.value(), 0, width, 5, 40));
+	sizeOfPixel = rSlider.value();
+	// console.log(sizeOfPixel);
 
+	// console.log((floor((img.width * img.height) / sizeOfPixel)));
+
+	numOfPixelsX = floor(img.width / sizeOfPixel);
+	numOfPixelsY = floor(img.height / sizeOfPixel);
+
+	// console.log(numOfPixelsX * numOfPixelsY);
+
+	numOfPixels = numOfPixelsX * numOfPixelsY;
+
+	// findNumOfPixels();
+	// console.log(floor(calculateSize(1800)));
+    // sizeOfPixel = calculateSize(1800);
 	for (var starty = 0; starty < img.height; starty++) {
 		// creates pixel index
 		for (var startx = 0; startx < img.width; startx++) {
@@ -36,30 +66,37 @@ function draw() {
 			var g = img.pixels[index + 1];
 			var b = img.pixels[index + 2];
 
-			// var bright = 0.3 * r + 0.59 * g + 0.11 * b; // sets pixel value to adjusted grayscale
-
 			noStroke(); // disables element stroke
+			fill(r, g, b);
 
-			// if (bright < 63.75) {
-			// 	fill(0);
-			// } else if (bright >= 63.75 && bright < 127.5) {
-			// 	fill(85);
-			// } else if (bright >= 127.5 && bright <= 191.25) {
-			// 	fill(170);
-			// } else if (bright >= 191.25 && bright <= 255) {
-			// 	fill(255);
-			// }
+			rect(startx, starty, sizeOfPixel, sizeOfPixel);
 
-			// fill(bright) // fills element with adjusted grayscale
-            fill(r, g, b);
+			// triangle(startx, starty, startx + (sizeOfPixel / 2), starty + sizeOfPixel, startx + sizeOfPixel, starty) // upside down triangle
+			// triangle(startx, starty, startx, starty + sizeOfPixel, startx + sizeOfPixel, starty)
 
-			rect(startx, starty, size);
-
-			// triangle(startx, starty, startx + (size / 2), starty + size, startx + size, starty) // upside down triangle
-			// triangle(startx, starty, startx, starty + size, startx + size, starty)
-
-			startx = startx + size - 1; // set new startx value
+			startx = startx + sizeOfPixel - 1; // set new startx value
 		}
-		starty = starty + size - 1; // set new starty value
+		starty = starty + sizeOfPixel - 1; // set new starty value
 	}
 }
+
+// function findNumOfPixels() {
+// 	// console.log(numOfPixelsX);
+// 	// console.log(numOfPixelsY);
+// 	// console.log(numOfPixels);
+// 	// console.log(sizeOfPixel)
+// 	// console.log(img.height);
+// 	// console.log(rSlider.value(), sizeOfPixel);
+// }
+
+function calculateSize(population) {
+	let area = img.width * img.height;
+
+	let s = area / population;
+
+	let s1 = Math.sqrt(s);
+
+	return s1;
+}
+
+

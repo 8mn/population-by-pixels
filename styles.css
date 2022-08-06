@@ -5,8 +5,7 @@ html, body {
 canvas {
   display: block;
   /* margin: auto; */
-  margin-top: 2rem;
-  margin-left: 2rem;
+  margin: 2rem;
 }
 
 
