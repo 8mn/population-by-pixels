@@ -47,7 +47,7 @@ function draw() {
 
 			// random(sizeDot);
 
-			ellipse(startx, starty, sizeDot); // creates element
+			ellipse(startx, starty, random(sizeDot, -8)); // creates element
 
 			startx = startx + sizeDot - 1; // set new startx value
 		}
