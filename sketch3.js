@@ -1,10 +1,10 @@
 let img; // creates image variable
 
-
 let startx = 0; // starting x coordinate
 let starty = 0; // starting y coordinate
 
-let population = 1800;
+let population
+let animalSpecies
 
 let numOfPixels; //aka total remaining population for panda it is ~1800
 let numOfPixelsX;
@@ -12,35 +12,69 @@ let numOfPixelsY;
 
 let sizeOfPixel = 0;
 
+let showAnimal;
+
+let animalImage;
+
 function preload() {
-	img = loadImage("./assets/panda-img.jpg"); // loads image
+	panda = loadImage("./assets/panda-img.jpg"); // loads image
+
+	tiger = loadImage("./assets/2tlod51659_Sumatran_Tiger_Hero.jpg");
+	whiteRhino = loadImage(
+		"./assets/993px-Northern_White_Rhinoceros_Angalifu.jpg"
+	); // loads image
+
+    amurLeopard = loadImage("./assets/amur-leaopard.jpg")
+
+
+
+    // img = tiger;
+    // animalSpecies = "Tiger";
+    // population = 3900
+
+    img = whiteRhino
+    animalSpecies = "Northern white rhinoceros"
+    population = 3
+
+    // img = panda
+    // animalSpecies = "Giant Panda"
+    // population = 1864
+
+
+    // img = amurLeopard
+    // animalSpecies = "Amur leopard"
+    // population = 99
 }
 
 function setup() {
 	createCanvas(img.width, img.height); // creates canvas
+	// createCanvas(920, windowHeight); // creates canvas
 
 	img.loadPixels(); // loads image
 	// img.resize(500, 0); // resizes image to window size
 	imageMode(CENTER);
 	img.updatePixels(); // updates image
 
-	// rSlider = createSlider(5, 2000, 2000, 1);
+
 	rSlider = createSlider(3, 1000, calculateSize(population), 1);
 	rSlider.position(30, 5);
 	rSlider.style("width", `${img.width}px`);
 
-    let currentPop = floor((img.height * img.width) /Math.pow(rSlider.value(), 2))
+    
+
+	// let currentPop = floor((img.height * img.width) /Math.pow(rSlider.value(), 2))
 
 	// createP("Current Population: " + currentPop);
 
-    button = createButton("Reset");
+	button = createButton("Reset");
 
-    button.mousePressed(resetPop);
+	button.mousePressed(resetPop);
+	// buttonTiger = createButton("Tiger");
+	// buttonTiger.mousePressed(tiger);
 }
 
-
-function resetPop(){
-    location.reload();
+function resetPop() {
+	location.reload();
 }
 
 
@@ -53,6 +87,7 @@ function draw() {
 
 	// sizeOfPixel = floor(map(rSlider.value(), 0, width, 5, 40));
 	sizeOfPixel = rSlider.value();
+	// sizeOfPixel = 18;
 
 	// console.log(sizeOfPixel);
 
@@ -63,12 +98,12 @@ function draw() {
 	// sizeOfPixel = calculateSize(1800);
 	// findNumOfPixels()
 
-		numOfPixelsX = floor(img.width / sizeOfPixel);
-		numOfPixelsY = floor(img.height / sizeOfPixel);
+	numOfPixelsX = floor(img.width / sizeOfPixel);
+	numOfPixelsY = floor(img.height / sizeOfPixel);
 
-		// console.log(numOfPixelsX * numOfPixelsY);
+	// console.log(numOfPixelsX * numOfPixelsY);
 
-		numOfPixels = numOfPixelsX * numOfPixelsY;
+	numOfPixels = numOfPixelsX * numOfPixelsY;
 
 	for (var starty = 0; starty < img.height; starty++) {
 		// creates pixel index
@@ -91,11 +126,15 @@ function draw() {
 		starty = starty + sizeOfPixel - 1; // set new starty value
 	}
 
+	let fps = frameRate();
 
-    fill(255);
+	fill(255);
 	// textSize(32);
-	text("Population: " + numOfPixels, 10, 20);
-    text("Size of Pixel: " + sizeOfPixel, 10, 35);
+	text(animalSpecies, 10, 30);
+	text("Population: " + numOfPixels, 10, 45);
+	text("Size of Pixel: " + sizeOfPixel, 10, 60);
+	// text("FPS :" + fps.toFixed(0), 10, 75);
+	// console.log();
 }
 
 // function findNumOfPixels() {
@@ -125,9 +164,6 @@ function calculateSize(population) {
 }
 
 
-const tigerBtn = document.getElementById("tiger");
-
-// tigerBtn.addEventListener("click", function() {
-//     population = 3900;
-//     image = loadImage("./assets/tiger-image.jpg");
-// // } );
+// function tiger() {
+// 	img = tiger;
+// }
