@@ -9,3 +9,13 @@ canvas {
 }
 
 
+p, button{
+  margin-left: 2rem;
+
+}
+
+button{
+  /* margin-top: 1rem; */
+  padding: .7rem 1.9rem;
+}
+

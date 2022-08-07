@@ -1,6 +1,5 @@
 let img; // creates image variable
 
-// let size = 7; // element size
 
 let startx = 0; // starting x coordinate
 let starty = 0; // starting y coordinate
@@ -14,7 +13,7 @@ let numOfPixelsY;
 let sizeOfPixel = 0;
 
 function preload() {
-	img = loadImage("./panda-img.jpg"); // loads image
+	img = loadImage("./assets/panda-img.jpg"); // loads image
 }
 
 function setup() {
@@ -22,18 +21,28 @@ function setup() {
 
 	img.loadPixels(); // loads image
 	// img.resize(500, 0); // resizes image to window size
-    imageMode(CENTER);
+	imageMode(CENTER);
 	img.updatePixels(); // updates image
 
 	// rSlider = createSlider(5, 2000, 2000, 1);
-	rSlider = createSlider(5, 1000, calculateSize(population), 1);
+	rSlider = createSlider(3, 1000, calculateSize(population), 1);
 	rSlider.position(30, 5);
 	rSlider.style("width", `${img.width}px`);
 
-	// text("Pixel Density: " + 900, 1);
-	// textSize(20);
-	// fill(255);
+    let currentPop = floor((img.height * img.width) /Math.pow(rSlider.value(), 2))
+
+	// createP("Current Population: " + currentPop);
+
+    button = createButton("Reset");
+
+    button.mousePressed(resetPop);
 }
+
+
+function resetPop(){
+    location.reload();
+}
+
 
 function draw() {
 	clear();
@@ -44,20 +53,23 @@ function draw() {
 
 	// sizeOfPixel = floor(map(rSlider.value(), 0, width, 5, 40));
 	sizeOfPixel = rSlider.value();
+
 	// console.log(sizeOfPixel);
 
 	// console.log((floor((img.width * img.height) / sizeOfPixel)));
 
-	numOfPixelsX = floor(img.width / sizeOfPixel);
-	numOfPixelsY = floor(img.height / sizeOfPixel);
-
-	// console.log(numOfPixelsX * numOfPixelsY);
-
-	numOfPixels = numOfPixelsX * numOfPixelsY;
-
 	// findNumOfPixels();
 	// console.log(floor(calculateSize(1800)));
-    // sizeOfPixel = calculateSize(1800);
+	// sizeOfPixel = calculateSize(1800);
+	// findNumOfPixels()
+
+		numOfPixelsX = floor(img.width / sizeOfPixel);
+		numOfPixelsY = floor(img.height / sizeOfPixel);
+
+		// console.log(numOfPixelsX * numOfPixelsY);
+
+		numOfPixels = numOfPixelsX * numOfPixelsY;
+
 	for (var starty = 0; starty < img.height; starty++) {
 		// creates pixel index
 		for (var startx = 0; startx < img.width; startx++) {
@@ -78,6 +90,12 @@ function draw() {
 		}
 		starty = starty + sizeOfPixel - 1; // set new starty value
 	}
+
+
+    fill(255);
+	// textSize(32);
+	text("Population: " + numOfPixels, 10, 20);
+    text("Size of Pixel: " + sizeOfPixel, 10, 35);
 }
 
 // function findNumOfPixels() {
@@ -87,6 +105,13 @@ function draw() {
 // 	// console.log(sizeOfPixel)
 // 	// console.log(img.height);
 // 	// console.log(rSlider.value(), sizeOfPixel);
+// 	numOfPixelsX = floor(img.width / sizeOfPixel);
+// 	numOfPixelsY = floor(img.height / sizeOfPixel);
+
+// 	// console.log(numOfPixelsX * numOfPixelsY);
+
+// 	numOfPixels = numOfPixelsX * numOfPixelsY;
+// 	return numOfPixels;
 // }
 
 function calculateSize(population) {
@@ -100,3 +125,9 @@ function calculateSize(population) {
 }
 
 
+const tigerBtn = document.getElementById("tiger");
+
+// tigerBtn.addEventListener("click", function() {
+//     population = 3900;
+//     image = loadImage("./assets/tiger-image.jpg");
+// // } );
